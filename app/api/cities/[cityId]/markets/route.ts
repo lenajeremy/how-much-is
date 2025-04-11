@@ -4,9 +4,10 @@ import prisma from '@/lib/prisma';
 
 export async function GET(
   request: Request,
-  { params }: { params: { cityId: string } }
+  { params }: { params:  Promise<{ cityId: string }> }
 ) {
-  const cityId = parseInt(params.cityId, 10);
+  const { cityId: id } = await params
+  const cityId = parseInt(id, 10);
 
   if (isNaN(cityId)) {
     return NextResponse.json({ error: 'Invalid city ID format' }, { status: 400 });

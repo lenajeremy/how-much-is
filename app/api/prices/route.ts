@@ -152,14 +152,12 @@ export async function POST(request: Request) {
 
     return NextResponse.json(formattedReport, { status: 201 });
   } catch (error) {
-    console.error("Failed to create price report:", error);
-    // Check if error is a known Prisma request error before accessing code
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-        // Handle known Prisma errors (e.g., foreign key constraint violation)
-        if (error.code === 'P2003') {
-             return new NextResponse(`Invalid foreign key: Ensure item, unit, or market exists.`, { status: 400 });
-        }
-    }
+    // console.error("Failed to create price report:", error);
+    // if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    //     if (error.code === 'P2003') {
+    //          return new NextResponse(`Invalid foreign key: Ensure item, unit, or market exists.`, { status: 400 });
+    //     }
+    // }
     if (error instanceof SyntaxError) { // JSON parsing error
         return new NextResponse('Invalid JSON body', { status: 400 });
     }
